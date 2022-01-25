@@ -1,0 +1,123 @@
+
+
+<div class="case-cap py-4">
+    <div class="container">
+        <div class="row col-xl-8 mx-auto">
+            <img src="https://emberjs.com/images/ember-logo.svg" alt="logo" class="img-fluid" style="max-width: 200px;" />
+            <h1 class="display-6 mb-0 text-dark">
+                Sentence Case Conversion App by 
+                <a href="https://emberjs.com/" target="_blank" class="badge text-light fw-normal bg-danger px-3"> Ember Js</a> 
+            </h1>
+            <p class="mb-3"><small>
+                @developed_by -  <a href="https://kawsarbinsiraj.github.io/" target="_blank" rel="noopener noreferrer"> Kawsar Bin Siraj </a> </small>
+                </p>
+            <form action="#">
+                <div class="input-group input_box mb-2">
+                    <textarea id="input" rows="5" class="form-control"  placeholder="Type/Paste Your Title Here to Convert"></textarea>
+                </div>
+                <div class="d-flex align-items-center justify-content-between gap-3">
+                    <div class="count d-flex">
+                        <span class="me-3">
+                            <span class="text-primary fw-normal">Total Character : </span>
+                            <span id="totalLetter">0</span>
+                        </span>
+                        <span>
+                            <span class="text-danger fw-normal">Total Word : </span>
+                            <span id="totalWord">0</span>
+                        </span>
+                    </div>
+                    <div class="actions d-flex align-items-center">
+                        <button id="textUpper" type="button" class="btn rounded-0 btn-sm btn-primary">Uppercase</button>
+                        <button id="textLower" type="button" class="btn rounded-0 btn-sm btn-info text-white">Lowercase</button>
+                        <button id="textSentenceCase" type="button" class="btn rounded-0 btn-sm btn-dark text-white">
+                            Sentence Case
+                        </button>
+                        <button id="textCapitalize" type="button" class="btn rounded-0 btn-sm btn-danger">Capitalize</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    // variable declaring
+    const input = document.querySelector("#input");
+    const totalLetter = document.getElementById("totalLetter");
+    const totalWord =  document.getElementById("totalWord");
+
+    // method declaring
+    const stringModify = (method, str) => {
+        switch(method) {
+            case 'makeUppercase':
+                input.value = str.toString().toUpperCase();
+                break;
+            case 'makeLowercase':
+                input.value = str.toString().toLowerCase();
+                break;
+            case 'makeSentenceCase':
+                let deicide = str.toString().split('.');
+                const newStr = deicide.map((s)=>{
+                    return s.trim().charAt(0).toUpperCase() + s.trim().slice(1).toLowerCase();
+                }).join('. ');
+                input.value = newStr
+                break;
+            case 'makeCapitalize':
+                let strArray = str.toString().split(' ');
+                let sentence = ''
+                strArray.forEach((value, index) => {
+                    sentence += `${value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()} `;
+                });
+                input.value = sentence;
+                break;
+            default:
+               return input.value = str
+        }
+    }
+
+    const latterCounter = (str) => {
+        return totalLetter.innerHTML = str.toString().length
+    }
+
+    const wordCounter = (str) => {
+        return totalWord.innerHTML = str.split(" ").filter(function(n) { return n != '' }).length
+    }
+
+    // event firing
+    document.getElementById("textUpper").addEventListener("click", function () {
+        input.value.toString().length > 0 ? 
+            stringModify('makeUppercase', input.value) 
+            : alert('To modify data you should must input first !!');
+    });
+
+    document.getElementById("textLower").addEventListener("click", function () {
+        input.value.toString().length > 0 ? 
+            stringModify('makeLowercase', input.value) 
+            : alert('To modify data you should must input first !!');
+    });
+
+    document.getElementById("textSentenceCase").addEventListener("click", function () {
+        (input.value.toString().length > 0) ? 
+            stringModify('makeSentenceCase', input.value) 
+            : alert('To modify data you should must input first !!');;
+    });
+
+
+    document.getElementById("textCapitalize").addEventListener("click", function () {
+        input.value.toString().length ? 
+            stringModify('makeCapitalize', input.value) 
+            : alert('To modify data you should must input first !!');
+    });
+
+    document.getElementById("input").addEventListener("keyup", function () {
+        latterCounter(input.value);
+        wordCounter(input.value);
+    });
+
+    document.getElementById("input").addEventListener("keydown", function () {
+        latterCounter(input.value);
+        wordCounter(input.value);
+    });
+
+</script>
